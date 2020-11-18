@@ -1,6 +1,6 @@
 console.log("index.js: loaded");
 
-async function main() {
+const main = async () => {
   try {
     const userId = getUserId();
     const userInfo = await fetchUserInfo(userId);
@@ -11,7 +11,7 @@ async function main() {
   }
 }
 
-function fetchUserInfo(userId) {
+const fetchUserInfo = userId => {
   return fetch(`https://api.github.com/users/${encodeURIComponent(userId)}`)
     .then(response => {
       if (!response.ok) {
@@ -22,7 +22,7 @@ function fetchUserInfo(userId) {
     });
 }
 
-function createView(userInfo) {
+const createView = userInfo => {
   return escapeHTML`
   <h4>${userInfo.name} (@${userInfo.login})</h4>
   <img src="${userInfo.avatar_url}" alt="${userInfo.login}" height="100">
@@ -35,16 +35,14 @@ function createView(userInfo) {
   `;
 }
 
-function getUserId() {
-  return document.getElementById("userId").value;
-}
+const getUserId = () => document.getElementById("userId").value;
 
-function displayView(view) {
+const displayView = view => {
   const result = document.getElementById("result");
   result.innerHTML = view;
 }
 
-function escapeSpecialChars(str) {
+const escapeSpecialChars = str => {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -53,7 +51,7 @@ function escapeSpecialChars(str) {
     .replace(/'/g, "&#039;");
 }
 
-function escapeHTML(strings, ...values) {
+const escapeHTML = (strings, ...values) => {
   return strings.reduce((result, str, i) => {
     const value = values[i -1];
     if (typeof value === "string") {
